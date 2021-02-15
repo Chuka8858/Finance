@@ -1,26 +1,59 @@
-// delgetstei ajillah
-var uiController = (function () {})();
-// sanhuutei ajillah
-var financeController = (function () {})();
-// controllor holbogch
-var appController = (function (uiController, financeController) {
-  var ctrlAddItem = function () {
-    // 1 oruulah ogogdol delgetsees olj avna
-    console.log("delgetsees ogogdol awah heseg");
-    // 2 olj awsan ogogdoluude sanhuugiin controlloroor damjuulj tend hadgalna
-
-    // 3 olj avsan ogogdoluudee web dr tohiroh hesegt gargana
-
-    // 4 tosowiig tootsoolno
-
-    // 5 etsesiin uldegdel tootsoog delgetsend gargana
+// Дэлгэцтэй ажиллах контроллер
+var uiController = (function () {
+  var DOMstrings = {
+    inputType: ".add__type",
+    inputDescription: ".add__description",
+    inputValue: ".add__value",
+    addBtn: ".add__btn",
   };
 
-  document.querySelector(".add__btn").addEventListener("click", function () {});
+  return {
+    getInput: function () {
+      return {
+        type: document.querySelector(DOMstrings.inputType).value,
+        description: document.querySelector(DOMstrings.inputDescription).value,
+        value: document.querySelector(DOMstrings.inputValue).value,
+      };
+    },
 
-  document.addEventListener("keypress", function (event) {
-    if (event.key === 13 || event.which === 13) {
+    getDOMstrings: function () {
+      return DOMstrings;
+    },
+  };
+})();
+
+// Санхүүтэй ажиллах контроллер
+var financeController = (function () {})();
+
+// Програмын холбогч контроллер
+var appController = (function (uiController, financeController) {
+  var ctrlAddItem = function () {
+    // 1. Оруулах өгөгдлийг дэлгэцээс олж авна.
+    console.log(uiController.getInput());
+    // 2. Олж авсан өгөгдлүүдээ санхүүгийн контроллерт дамжуулж тэнд хадгална.
+    // 3. Олж авсан өгөгдлүүдээ вэб дээрээ тохирох хэсэгт нь гаргана
+    // 4. Төсвийг тооцоолно
+    // 5. Эцсийн үлдэгдэл, тооцоог дэлгэцэнд гаргана.
+  };
+  var setupEvntListeners = function () {
+    var DOM = uiController.getDOMstrings();
+
+    document.querySelector(DOM.addBtn).addEventListener("click", function () {
       ctrlAddItem();
-    }
-  });
+    });
+
+    document.addEventListener("keypress", function (event) {
+      if (event.keyCode === 13 || event.which === 13) {
+        ctrlAddItem();
+      }
+    });
+  };
+  return {
+    init: function () {
+      console.log("Application started");
+      setupEvntListeners();
+    },
+  };
 })(uiController, financeController);
+
+appController.init();
